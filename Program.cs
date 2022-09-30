@@ -1,4 +1,4 @@
-﻿
+﻿Console.WriteLine("Привет Git \n");
 
 Console.WriteLine("Привет! Напиши, пожалуйста, свои данные:");
 
