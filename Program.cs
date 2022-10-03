@@ -1,27 +1,52 @@
-﻿Console.WriteLine("Привет Git \n");
+﻿Console.InputEncoding = System.Text.Encoding.GetEncoding("utf-16");
 
-Console.WriteLine("Привет! Напиши, пожалуйста, свои данные:");
+Console.WriteLine("Привет Git \n");
 
-Console.WriteLine("Введите имя:");
-string name = Console.ReadLine();
+Console.WriteLine("Привет! Напиши, пожалуйста, свои данные. \n");
 
-Console.WriteLine("Ведите год рождения");
-string birth = Console.ReadLine();
+  Console.Write("Введите имя:");
+ string name = Console.ReadLine();
 
-Console.WriteLine("Ввведите работу");
-string isEmployed = Console.ReadLine();
+int birth;
+Console.Write("Введите год рождения:");
 
-Console.WriteLine("Введите вес");
+while (!int.TryParse(Console.ReadLine(), out birth))
+{
+    Console.WriteLine("Ошибка ввода! Введите год рождения");
+}
+
+Console.Write("Вы работаете? Введите да/нет:");
+bool isEmployed = Console.ReadLine().ToLower() == "да" ? true : false;
+
+ string job="";
+if (isEmployed)
+{
+    Console.Write("Кем? ");   
+    job = Console.ReadLine();    
+}
+else 
+{
+    Console.Write("Ха-ха, безработный \n");
+}
+
+
+
+Console.Write("Введите вес:");
 string weight = Console.ReadLine();
 
-int i1 = Convert.ToInt32 (birth);
-Console.WriteLine(DateTime.Today.Year);
+
 int currentyear = DateTime.Today.Year;
-int age = currentyear - i1;
+int age = currentyear - birth;
 
 
 
-Console.WriteLine($"Имя: {name}");
+Console.WriteLine($"\nИмя: {name}");
 Console.WriteLine($"Возраст: {age}");
-Console.WriteLine($"Работает: {isEmployed}");
+
+if (isEmployed)
+{
+    Console.WriteLine($"Работа: {job}");
+}
+
+
 Console.WriteLine($"Вес: {weight}");
