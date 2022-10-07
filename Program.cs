@@ -1,4 +1,6 @@
-﻿Console.InputEncoding = System.Text.Encoding.GetEncoding("utf-16");
+﻿using System.IO.Pipes;
+
+Console.InputEncoding = System.Text.Encoding.GetEncoding("utf-16");
 
 
 
@@ -21,57 +23,69 @@ for (int questionnaire = 0; questionnaire < respondents; questionnaire++)
 {
    Console.WriteLine($"Заполните анкету №{questionnaire+1} из {respondents} \n");
 
-    Console.Write("Введите имя:");
-    names[questionnaire] = Console.ReadLine();
+    names[questionnaire] = getName();
 
-    int birth;
+    ages[questionnaire] = getAge();
+
+    jobs[questionnaire] = getJob();
+
+    weights[questionnaire] = getWeight();
+
+    Console.WriteLine();
+}
+People(names,ages,jobs,weights);
+
+
+void People (string[] names, int[] ages, string[] jobs, double[] weights)
+{
+    Console.WriteLine("Имя\tВозраст\tРабота\tВес");
+
+    for (int i = 0; i < names.Length; i++) 
+    {
+        Console.Write($"{names[i]}\t{ages[i]}\t{jobs[i]}\t{weights[i]}\n");
+    }
+}
+
+
+string getName()
+{
+    Console.Write("Введите имя:");
+    return Console.ReadLine();
+}
+
+int getAge()
+{
+   int birth;
     Console.Write("Введите год рождения:");
     while (!int.TryParse(Console.ReadLine(), out birth))
     {
         Console.WriteLine("Ошибка ввода! Введите год рождения");
     }
+int currentyear = DateTime.Today.Year;
+   int age = currentyear - birth;
+    return age;
+}
 
+string getJob()
+{
     Console.Write("Вы работаете? Введите да/нет:");
     bool isEmployed = Console.ReadLine().ToLower() == "да" ? true : false;
 
     if (isEmployed)
     {
         Console.Write("Кем? ");
-        jobs[questionnaire] = Console.ReadLine();
+      return Console.ReadLine();
     }
     else
     {
         Console.Write("Ха-ха, безработный \n");
+        return "";
     }
-
-    Console.Write("Введите вес:");
-    weights[questionnaire] = Convert.ToDouble(Console.ReadLine());
-
-    int currentyear = DateTime.Today.Year;
-    ages[questionnaire] = currentyear - birth;
-    Console.WriteLine();
 }
 
-Console.Write("Имя");
-foreach (string name in names) 
+double getWeight()
 {
-    Console.Write("\t"+name);
+Console.Write("Введите вес:");
+    return  Convert.ToDouble(Console.ReadLine());
 }
 
-Console.Write("\nВозраст");
-foreach (int age in ages)
-{
-    Console.Write("\t" + age);
-}
-
-Console.Write("\nРабота");
-foreach (string job in jobs)
-{
-   Console.Write("\t" + job);
-}
-
-Console.Write("\nВес");
-foreach (double weight in weights)
-{
-    Console.Write("\t" + weight);
-}
