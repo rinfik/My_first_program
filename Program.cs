@@ -1,4 +1,6 @@
-﻿using System.IO.Pipes;
+﻿using ConsoleApp2;
+using System.IO.Pipes;
+
 
 Console.InputEncoding = System.Text.Encoding.GetEncoding("utf-16");
 
@@ -6,6 +8,7 @@ Console.InputEncoding = System.Text.Encoding.GetEncoding("utf-16");
 
 Console.WriteLine("Привет Git \n");
 
+ 
 int respondents;
 do
 {
@@ -14,78 +17,82 @@ do
 while (!int.TryParse(Console.ReadLine(), out respondents));
 Console.WriteLine();
 
-string[] names = new string[respondents];
-int[] ages = new int[respondents];
+
+Person[] persons = new Person[respondents];
+/*int[] ages = new int[respondents];
 string[] jobs = new string[respondents];
-double[] weights = new double[respondents];
+double[] weights = new double[respondents];*/
 
 for (int questionnaire = 0; questionnaire < respondents; questionnaire++)
 {
    Console.WriteLine($"Заполните анкету №{questionnaire+1} из {respondents} \n");
 
-    names[questionnaire] = getName();
+    Person p = new Person();
+    p.setName();
+    p.setAge();
+    p.setJob();
+    p.setWeight();
 
-    ages[questionnaire] = getAge();
-
-    jobs[questionnaire] = getJob();
-
-    weights[questionnaire] = getWeight();
+    persons[questionnaire] = p;
 
     Console.WriteLine();
+
 }
-People(names,ages,jobs,weights);
 
-
-void People (string[] names, int[] ages, string[] jobs, double[] weights)
+foreach (var c in persons)
 {
-    Console.WriteLine("Имя\tВозраст\tРабота\tВес");
+    c.Print();
+}
 
-    for (int i = 0; i < names.Length; i++) 
+
+void People(string[] names, int[] ages, string[] jobs, double[] weights)
     {
-        Console.Write($"{names[i]}\t{ages[i]}\t{jobs[i]}\t{weights[i]}\n");
+        Console.WriteLine("Имя\tВозраст\tРабота\tВес");
+
+        for (int i = 0; i < names.Length; i++)
+        {
+            Console.Write($"{names[i]}\t{ages[i]}\t{jobs[i]}\t{weights[i]}\n");
+        }
     }
-}
 
-
-string getName()
-{
-    Console.Write("Введите имя:");
-    return Console.ReadLine();
-}
-
-int getAge()
-{
-   int birth;
-    Console.Write("Введите год рождения:");
-    while (!int.TryParse(Console.ReadLine(), out birth))
+    string getName()
     {
-        Console.WriteLine("Ошибка ввода! Введите год рождения");
+        Console.Write("Введите имя:");
+        return Console.ReadLine();
     }
-int currentyear = DateTime.Today.Year;
-   int age = currentyear - birth;
-    return age;
-}
 
-string getJob()
-{
-    Console.Write("Вы работаете? Введите да/нет:");
-    bool isEmployed = Console.ReadLine().ToLower() == "да" ? true : false;
-
-    if (isEmployed)
+     int getAge()
     {
-        Console.Write("Кем? ");
-      return Console.ReadLine();
+        int birth;
+        Console.Write("Введите год рождения:");
+        while (!int.TryParse(Console.ReadLine(), out birth))
+        {
+            Console.WriteLine("Ошибка ввода! Введите год рождения");
+        }
+        int currentyear = DateTime.Today.Year;
+        int age = currentyear - birth;
+        return age;
     }
-    else
+
+     string getJob()
     {
-        Console.Write("Ха-ха, безработный \n");
-        return "";
+        Console.Write("Вы работаете? Введите да/нет:");
+        bool isEmployed = Console.ReadLine().ToLower() == "да" ? true : false;
+
+        if (isEmployed)
+        {
+            Console.Write("Кем? ");
+            return Console.ReadLine();
+        }
+        else
+        {
+            Console.Write("Ха-ха, безработный \n");
+            return "";
+        }
     }
-}
 
-double getWeight()
-{
-Console.Write("Введите вес:");
-    return  Convert.ToDouble(Console.ReadLine());
-}
-
+     double getWeight()
+    {
+        Console.Write("Введите вес:");
+        return Convert.ToDouble(Console.ReadLine());
+    }
